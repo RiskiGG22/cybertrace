@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050506">
+  <title>CyberTrace | Advanced CTI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css?v=11">
+</head>
+<body>
+
+<video class="eye-bg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+  <source src="eye.mp4" type="video/mp4">
+</video>
+<div class="vignette"></div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">◈ CYBERTRACE</div>
+    <div class="brand-sub">THREAT INTELLIGENCE</div>
+
+    <div class="nav-label">WORKSPACE</div>
+    <nav>
+      <a class="active" href="#overview"><span class="ico">▦</span><span>Dashboard</span></a>
+      <a href="#analytics"><span class="ico">⌁</span><span>Analytics</span></a>
+      <a href="#feed"><span class="ico">⟳</span><span>Live Feed</span></a>
+      <a href="#map"><span class="ico">◎</span><span>Threat Map</span></a>
+      <a href="#landscape"><span class="ico">◍</span><span>Landscape</span></a>
+      <a href="#indicators"><span class="ico">◈</span><span>Indicators</span></a>
+      <a href="#investigations"><span class="ico">▤</span><span>Cases</span></a>
+      <a href="#activity"><span class="ico">◷</span><span>Activity</span></a>
+    </nav>
+
+    <div class="sidebar-status">
+      <span class="pulse"></span><span id="sysText">MENGHUBUNGKAN...</span>
+      <small>CyberTrace V2.2</small>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div class="top-brand">◈ CYBERTRACE</div>
+      <div>
+        <div class="top-title">Intelligence Center</div>
+        <div class="top-sub">Security Operations / Overview</div>
+      </div>
+      <div class="top-right">
+        <span class="demo-label" id="liveBadge">● MEMUAT...</span>
+        <span class="avatar">CT</span>
+      </div>
+    </header>
+
+    <section id="overview" class="hero reveal from-left">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="hero-text">
+        <div class="eyebrow">THREAT MONITORING SYSTEM</div>
+        <h1>Security Overview</h1>
+        <p>Monitoring global cyber threat intelligence · data live dari ThreatFox (abuse.ch).</p>
+      </div>
+      <div class="live-status"><span class="pulse"></span>LIVE INTERFACE</div>
+    </section>
+
+    <div class="metric-grid">
+      <article class="metric reveal">
+        <div class="metric-top"><span>IOC (24 Jam)</span><span class="metric-icon">◈</span></div>
+        <strong id="statTotal" class="loading">...</strong>
+        <small>THREATFOX LIVE</small>
+      </article>
+
+      <article class="metric reveal">
+        <div class="metric-top"><span>Malware Families</span><span class="metric-icon">⌕</span></div>
+        <strong id="statFamilies" class="loading">...</strong>
+        <small>THREATFOX LIVE</small>
+      </article>
+
+      <article class="metric reveal">
+        <div class="metric-top"><span>IP Indicators</span><span class="metric-icon">◎</span></div>
+        <strong id="statIps" class="loading">...</strong>
+        <small>THREATFOX LIVE</small>
+      </article>
+
+      <article class="metric reveal">
+        <div class="metric-top"><span>Investigations</span><span class="metric-icon">▤</span></div>
+        <strong id="investigationCount">00</strong>
+        <small>LOCAL RECORDS</small>
+      </article>
+    </div>
+
+    <div class="dash">
+
+      <div id="analytics" class="panel span-8 reveal from-left">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">INTELLIGENCE ANALYTICS</span>
+            <h2>IOC Ingestion Trend</h2>
+            <p class="panel-sub">Jumlah IOC baru per jam · 24 jam terakhir</p>
+          </div>
+          <span class="chart-value" id="trendValue">-</span>
+        </div>
+
+        <div class="chart">
+          <div class="y-labels" id="yLabels">
+            <span>0</span><span>0</span><span>0</span><span>0</span><span>0</span>
+          </div>
+
+          <svg viewBox="0 0 600 190" preserveAspectRatio="none" role="img" aria-label="Grafik jumlah IOC baru per jam">
+            <defs>
+              <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff2b3a" stop-opacity=".3"/>
+                <stop offset="100%" stop-color="#ff2b3a" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g class="grid-lines">
+              <path d="M0 10 H600 M0 52 H600 M0 94 H600 M0 136 H600 M0 178 H600"/>
+            </g>
+            <path class="area" id="trendArea" d=""/>
+            <path class="line" id="trendLine" d=""/>
+          </svg>
+        </div>
+        <div class="chart-labels" id="trendLabels"></div>
+      </div>
+
+      <div class="panel span-4 reveal from-right">
+        <h3>Top Malware</h3>
+        <p class="panel-sub">Paling banyak dilaporkan</p>
+        <div id="malwareBars">
+          <div class="feed-empty loading">Memuat data...</div>
+        </div>
+      </div>
+
+      <div id="feed" class="panel span-7 reveal from-left">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">THREAT FEED</span>
+            <h2>Latest Indicators</h2>
+          </div>
+          <span class="tag" id="feedUpdated">LIVE</span>
+        </div>
+        <div class="table-wrap">
+          <table class="feed-table">
+            <thead>
+              <tr>
+                <th>INDICATOR</th>
+                <th>MALWARE</th>
+                <th>TYPE</th>
+                <th>SEEN</th>
+              </tr>
+            </thead>
+            <tbody id="feedBody">
+              <tr><td colspan="4" class="feed-empty loading">Memuat data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="map-note">Sumber: ThreatFox (abuse.ch). Data laporan komunitas, diperbarui otomatis.</p>
+      </div>
+
+      <div id="map" class="panel span-5 reveal from-right">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">GEOSPATIAL INTELLIGENCE</span>
+            <h2>Global Threat Map</h2>
+          </div>
+          <span class="tag" id="mapTag">GEOIP · MEMUAT</span>
+        </div>
+        <div class="map-visual world">
+          <svg id="worldMap" viewBox="0 20 720 270" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Peta lokasi IP C2 dari ThreatFox"></svg>
+          <div class="map-caption" id="mapCaption">MEMUAT PETA...</div>
+        </div>
+        <div class="country-list" id="countryList"></div>
+        <p class="map-note">Lokasi dari layanan GeoIP untuk IP server C2 di ThreatFox. Perkiraan lokasi server, bukan atribusi pelaku.</p>
+      </div>
+
+      <div id="indicators" class="panel span-7 ind-panel reveal from-right">
+        <span class="eyebrow">INDICATOR MANAGEMENT</span>
+        <h3 style="margin-top:3px">Indicator Analysis</h3>
+        <p class="sub">Masukkan IP atau domain untuk memeriksa indikator di ThreatFox.</p>
+        <div class="input-row">
+          <input id="indicator" placeholder="IP address / domain..." autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button id="analyzeBtn">ANALYZE</button>
+        </div>
+        <div id="result" class="output"></div>
+      </div>
+
+      <div id="landscape" class="panel span-5 reveal from-left">
+        <span class="eyebrow">THREAT LANDSCAPE</span>
+        <h3 style="margin-top:3px">IOC Types</h3>
+        <p class="sub">Distribusi jenis indikator</p>
+        <div class="donut-wrap">
+          <svg id="donut" viewBox="0 0 100 100" role="img" aria-label="Distribusi jenis IOC"></svg>
+          <div class="donut-legend" id="donutLegend">
+            <div class="feed-empty loading">Memuat data...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel span-5 reveal">
+        <h3>Threat Types</h3>
+        <p class="sub">Jenis ancaman terbanyak</p>
+        <div id="threatBars">
+          <div class="feed-empty loading">Memuat data...</div>
+        </div>
+        <h3 class="chips-title">Top Tags</h3>
+        <div class="chips" id="tagChips"></div>
+        <p class="map-note" id="confNote"></p>
+      </div>
+
+      <div id="investigations" class="panel span-5 reveal from-left">
+        <span class="eyebrow">CASE MANAGEMENT</span>
+        <h3 style="margin-top:3px">Investigation Center</h3>
+        <input id="caseName" placeholder="Nama kasus investigasi">
+        <input id="caseIndicator" placeholder="IP / Domain terkait">
+        <button id="saveCase">SAVE INVESTIGATION</button>
+        <div id="caseResult" class="output"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>CASE</th><th>INDICATOR</th><th>STATUS</th></tr>
+            </thead>
+            <tbody id="caseTable">
+              <tr><td colspan="3" class="feed-empty">Belum ada investigasi. Simpan kasus pertamamu di atas.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="activity" class="panel span-12 reveal">
+        <span class="eyebrow">SYSTEM EVENTS</span>
+        <h3 style="margin-top:3px">Recent Activity</h3>
+        <div class="activity-list" id="activityList">
+          <div class="activity">
+            <span class="activity-dot"></span>
+            <div>
+              <b>CyberTrace initialized</b>
+              <small>System interface loaded</small>
+            </div>
+            <time>LOCAL</time>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>CYBERTRACE V2.2 © 2026 · CTI &amp; OSINT PLATFORM</footer>
+
+  </main>
+</div>
+
+<script src="script.js?v=10"></script>
+</body>
+</html>
